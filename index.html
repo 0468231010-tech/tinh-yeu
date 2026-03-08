@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8/3 Gift</title>
+
+<style>
+body{
+background:#111;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial;
+color:white;
+overflow:hidden;
+}
+
+.gift{
+font-size:80px;
+cursor:pointer;
+}
+
+.heart{
+width:120px;
+height:120px;
+background:red;
+position:relative;
+transform:rotate(-45deg);
+margin-top:40px;
+display:none;
+animation:beat 1s infinite;
+z-index:1;
+}
+
+.heart::before,
+.heart::after{
+content:"";
+width:120px;
+height:120px;
+background:red;
+border-radius:50%;
+position:absolute;
+}
+
+.heart::before{top:-60px;}
+.heart::after{left:60px;}
+
+@keyframes beat{
+0%{transform:rotate(-45deg) scale(1);}
+50%{transform:rotate(-45deg) scale(1.2);}
+100%{transform:rotate(-45deg) scale(1);}
+}
+
+#message{
+margin-top:40px;
+font-size:26px;
+display:none;
+text-align:center;
+}
+
+.bee{
+font-size:40px;
+position:absolute;
+display:none;
+z-index:5;
+}
+
+#bee1{
+animation:orbit1 4s linear infinite;
+}
+
+#bee2{
+animation:orbit2 4s linear infinite;
+}
+
+@keyframes orbit1{
+0%{transform:translate(0,0);}
+25%{transform:translate(120px,-60px);}
+50%{transform:translate(0,-120px);}
+75%{transform:translate(-120px,-60px);}
+100%{transform:translate(0,0);}
+}
+
+@keyframes orbit2{
+0%{transform:translate(0,-120px);}
+25%{transform:translate(-120px,-60px);}
+50%{transform:translate(0,0);}
+75%{transform:translate(120px,-60px);}
+100%{transform:translate(0,-120px);}
+}
+
+.firework{
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+animation:explode 1.5s ease-out forwards;
+}
+
+@keyframes explode{
+0%{
+transform:translate(0,0);
+opacity:1;
+}
+100%{
+transform:translate(var(--x),var(--y));
+opacity:0;
+}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="gift" id="gift" onclick="openGift()">🎁</div>
+
+<div class="heart" id="heart"></div>
+
+<div class="bee" id="bee1">🐝</div>
+<div class="bee" id="bee2">🐝</div>
+
+<div id="message">
+💖 Chúc em yêu Bảo Châu 8/3 vui vẻ <br>
+hạnh phúc bên anh và ngày càng xinh đẹp 💖
+</div>
+
+<script>
+
+function randomColor(){
+let colors=["red","yellow","blue","pink","orange","lime","cyan"];
+return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function createFirework(){
+
+for(let i=0;i<60;i++){
+
+let fw=document.createElement("div");
+fw.className="firework";
+
+let angle=Math.random()*Math.PI*2;
+let distance=Math.random()*200;
+
+let x=Math.cos(angle)*distance;
+let y=Math.sin(angle)*distance;
+
+fw.style.left=Math.random()*100+"%";
+fw.style.top=Math.random()*100+"%";
+
+fw.style.background=randomColor();
+
+fw.style.setProperty('--x',x+"px");
+fw.style.setProperty('--y',y+"px");
+
+document.body.appendChild(fw);
+
+setTimeout(()=>fw.remove(),1500);
+
+}
+
+}
+
+function startFireworks(){
+setInterval(createFirework,800);
+}
+
+function openGift(){
+
+document.getElementById("gift").style.display="none";
+
+document.getElementById("heart").style.display="block";
+document.getElementById("message").style.display="block";
+
+let bee1=document.getElementById("bee1");
+let bee2=document.getElementById("bee2");
+
+bee1.style.display="block";
+bee2.style.display="block";
+
+bee1.style.left="50%";
+bee1.style.top="50%";
+
+bee2.style.left="50%";
+bee2.style.top="50%";
+
+startFireworks();
+
+}
+
+</script>
+
+</body>
+</html>
